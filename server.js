@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 3000;
 
 //OpenWeatherMap middleware to redirect all traffic to http: not https:
 
+// req.headers['x-forwarded-proto'] is now equivalent to -> req.protocol
+
 app.use(function(req, res, next) {
     if (req.headers['x-forwarded-proto'] === 'http') {
         next();
