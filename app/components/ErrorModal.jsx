@@ -29,10 +29,14 @@ var ErrorModal = React.createClass({
                 </p>
             </div>
         );
-        // convert jsx to html
+
+        // remove node if there is one left by Foundation
+        $('.reveal-overlay').remove();
+
+        // convert jsx to html string
         var $modal = $(ReactDOMServer.renderToString(modalMarkup));
 
-        // use jQuery to select ReactDOM element and display $modal
+        // use jQuery to attach $modal to ReactDOM node
         $(ReactDOM.findDOMNode(this)).html($modal);
 
         var modal = new Foundation.Reveal($('#error-modal'));
