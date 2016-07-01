@@ -47,7 +47,7 @@ var Weather = React.createClass({
             window.location.hash = '#/';
         }
     },
-    
+
     // called when component's props are updated
     componentWillReceiveProps: function (newProps) {
         var location = newProps.location.query.location;
@@ -71,6 +71,10 @@ var Weather = React.createClass({
 
         function renderError() {
             if (typeof errorMessage === 'string') {
+                if (errorMessage === 'Error: Not found city') {
+                    errorMessage = 'City not found';
+                }
+
                 return <ErrorModal message={errorMessage}/>;
             }
         }

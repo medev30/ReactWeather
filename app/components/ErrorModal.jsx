@@ -1,29 +1,27 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
+var ReactDOMServer = require('react-dom/server');
+
 var PropTypes = React.PropTypes;
 
 var ErrorModal = React.createClass({
     getDefaultProps: function () {
         return {
-            title: 'My Error'
+            title: 'Error'
         };
     },
 
     propTypes: {
-        title: PropTypes.number,
+        title: PropTypes.string,
         message: PropTypes.string.isRequired
     },
 
     componentDidMount: function () {
-        var modal = new Foundation.Reveal($('#error-modal'));
-        modal.open();
-    },
-
-    render: function() {
         var {title, message} = this.props;
-        return (
+        var modalMarkup = (
             <div id='error-modal' className='reveal tiny text-center' data-reveal=''>
                 <h4>{title}</h4>
-                <p>{message}</p>
+                <h5>{message}</h5>
                 <p>
                     <button className='button holow' data-close=''>
                         Okay
@@ -31,6 +29,20 @@ var ErrorModal = React.createClass({
                 </p>
             </div>
         );
+        // convert jsx to html
+        var $modal = $(ReactDOMServer.renderToString(modalMarkup));
+
+        // use jQuery to select ReactDOM element and display $modal
+        $(ReactDOM.findDOMNode(this)).html($modal);
+
+        var modal = new Foundation.Reveal($('#error-modal'));
+        modal.open();
+    },
+
+    render: function() {
+        return (
+            <div/>
+        )
     }
 });
 
